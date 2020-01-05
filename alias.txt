@@ -1,0 +1,3 @@
+alias commons_up="cd ~/projects/commons && cat README.md && docker-compose up -d && cd -"
+alias commons_status="cd ~/projects/commons && cat README.md && docker-compose ps && cd -"
+alias commons_down="cd ~/projects/commons && cat README.md && docker-compose down && cd -"

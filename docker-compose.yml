@@ -1,0 +1,54 @@
+version: '3.4'
+
+services:
+  mysql_global:
+    image: mysql:8
+    container_name: mysql_global
+    command: ['mysqld','--character-set-server=utf8','--default-authentication-plugin=mysql_native_password']
+    volumes:
+      - ./.data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3306:3306'
+      - '33060:33060'
+    networks: 
+      - base-commons
+    restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOSTS: mysql_global
+    networks: 
+      - base-commons
+    restart: always
+  postgres_global:
+    image: "postgres:9.6"
+    container_name: "postgres_global"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.data_postgres:/var/lib/postgresql/data
+    networks: 
+      - base-commons
+    restart: always
+  pgadmin_global:
+    image: dpage/pgadmin4:4.10
+    container_name: "pgadmin_global"    
+    depends_on:
+      - postgres_global
+    ports:
+      - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./.pgadmin/:/var/lib/pgadmin
+    networks: 
+      - base-commons
+    restart: always
+networks:
+  base-commons:
+    driver: "bridge"
