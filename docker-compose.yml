@@ -31,6 +31,8 @@ services:
     restart: always
   postgres_global_9:
     image: "postgres:9.6"
+    environment:
+      POSTGRES_PASSWORD: postgres
     container_name: "postgres_global_9"
     ports:
       - "5432:5432"
