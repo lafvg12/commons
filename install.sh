@@ -49,7 +49,7 @@ echo "alias ${ALIAS}_mysql_stop=\"cd $ACTUAL_DIR && cat README_mysql.md && docke
 echo "alias ${ALIAS}_postgres_9_up=\"cd $ACTUAL_DIR && cat README_mysql.md && docker-compose up -d postgres_global_9 pgadmin_global && cd -\"" >> .bash_fundefir_rc
 echo "alias ${ALIAS}_postgres_9_stop=\"cd $ACTUAL_DIR && cat README_mysql.md && docker-compose stop postgres_global_9 pgadmin_global && cd -\"" >> .bash_fundefir_rc
 echo "alias ${ALIAS}_show=\"cd $ACTUAL_DIR && ./install.sh && cd -\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_update_tool=\"cd $ACTUAL_DIR && git pull origin master && cd -\"" >> .bash_fundefir_rc
+echo "alias ${ALIAS}_update_tool=\"cd $ACTUAL_DIR && git pull origin master && fd_show && cd -\"" >> .bash_fundefir_rc
 echo "alias ${ALIAS}_console=\"cd $ACTUAL_DIR && bin/console && cd -\"" >> .bash_fundefir_rc
 
 if OUTPUT=$(cat ~/.zshrc | grep .bash_fundefir_rc)
