@@ -1,43 +1,38 @@
 #!/bin/bash
-# ----------------------------------
-# Colors
-# ----------------------------------
-NOCOLOR='\033[0m'
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHTGRAY='\033[0;37m'
-DARKGRAY='\033[1;30m'
-LIGHTRED='\033[1;31m'
-LIGHTGREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-LIGHTBLUE='\033[1;34m'
-LIGHTPURPLE='\033[1;35m'
-LIGHTCYAN='\033[1;36m'
-WHITE='\033[1;37m'
 
-DART_VERSION_SDK=$1
+source ${PWD}/bin/colors.sh
+source ${PWD}/bin/functions.sh
 
-if [ -z "$1" ]
-then
-  DART_VERSION_SDK="2.7.0"
-fi
+COMMAND=$1
+ARG=$2
+num_args="$#"
 
-echo -e "${GREEN}Installing DART SDK ${DART_VERSION_SDK}${NOCOLOR}"
-echo -e "${BLUE}Only supports MAC, pending Windows, Linux.${NOCOLOR}"
+for (( i = 2; i <= "$num_args"; i++ )); do
+    NEW_ARGS="$NEW_ARGS $2"
+    shift
+done
 
-cd /tmp
-rm dartsdk-macos-x64-release.zip
-rm -rf dartsdk-macos-x64-release
-rm -rf ~/development/dart-sdk/${DART_VERSION_SDK}
-rm -rf dart-sdk
-rm -rf ${DART_VERSION_SDK}
-wget https://storage.googleapis.com/dart-archive/channels/stable/release/${DART_VERSION_SDK}/sdk/dartsdk-macos-x64-release.zip
-unzip dartsdk-macos-x64-release.zip
-mkdir -p ~/development/dart-sdk/${DART_VERSION_SDK}
-cp -R dart-sdk/* ~/development/dart-sdk/${DART_VERSION_SDK}/
-cd -
-echo -e "${GREEN}SDK downloaded${NOCOLOR}"
+echo -e "${GREEN}
+==============================================================
+TOOLS Console command for ${ORANGE}$ALIAS_ORG_TOOLS_F${NOCOLOR}
+${GREEN}==============================================================${NOCOLOR}
+"
+
+detect_os
+
+case $COMMAND in
+  "dart_sdk")
+    echo "Initialization: installing SDK $NEW_ARGS"
+    install_dart_sdk $NEW_ARGS
+    ;;
+  *)
+    echo -e "${RED}Command not found${NOCOLOR}"
+
+    echo "The available commands:"
+    echo ""
+
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}number_version${NOCOLOR}     : Install SDK, ej: ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}2.7.0${NOCOLOR}"
+    ;;
+esac
+
+
