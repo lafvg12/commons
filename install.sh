@@ -53,6 +53,7 @@ echo "=============================================="
 ACTUAL_DIR=${PWD}
 echo "export ALIAS_TOOLS_F=$ALIAS" > .bash_fundefir_rc
 echo "export ALIAS_ORG_TOOLS_F=$ORG" >> .bash_fundefir_rc
+echo "export ALIAS_ORG_ACTUAL_DIR=$ACTUAL_DIR" >> .bash_fundefir_rc
 echo "alias ${ALIAS}_up=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose up -d && cd -\"" >> .bash_fundefir_rc
 echo "alias ${ALIAS}_status=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose ps && cd -\"" >> .bash_fundefir_rc
 echo "alias ${ALIAS}_down=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose down && cd -\"" >> .bash_fundefir_rc

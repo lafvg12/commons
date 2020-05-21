@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source ${PWD}/bin/colors.sh
-source ${PWD}/bin/functions.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/colors.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/functions.sh
 
 COMMAND=$1
 ARG=$2
