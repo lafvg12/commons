@@ -1,23 +1,6 @@
 #!/bin/bash
-# ----------------------------------
-# Colors
-# ----------------------------------
-NOCOLOR='\033[0m'
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHTGRAY='\033[0;37m'
-DARKGRAY='\033[1;30m'
-LIGHTRED='\033[1;31m'
-LIGHTGREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-LIGHTBLUE='\033[1;34m'
-LIGHTPURPLE='\033[1;35m'
-LIGHTCYAN='\033[1;36m'
-WHITE='\033[1;37m'
+source ./bin/colors.sh
+source ./bin/functions.sh
 
 ALIAS=$1
 ORG=$2
@@ -51,45 +34,13 @@ echo -e "Installing common tools for ${BLUE}${ORG}${NOCOLOR}"
 echo "=============================================="
 
 ACTUAL_DIR=${PWD}
-echo "export ALIAS_TOOLS_F=$ALIAS" > .bash_fundefir_rc
-echo "export ALIAS_ORG_TOOLS_F=$ORG" >> .bash_fundefir_rc
-echo "export ALIAS_ORG_ACTUAL_DIR=$ACTUAL_DIR" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_up=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose up -d && cd -\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_status=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose ps && cd -\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_down=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose down && cd -\"" >> .bash_fundefir_rc
 
-echo "alias ${ALIAS}_mysql_up=\"cd $ACTUAL_DIR && cat README_mysql.md && docker-compose up -d mysql_global && cd -\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_mysql_stop=\"cd $ACTUAL_DIR && cat README_mysql.md && docker-compose stop mysql_global && cd -\"" >> .bash_fundefir_rc
+detect_os 
 
-echo "alias ${ALIAS}_postgres_9_up=\"cd $ACTUAL_DIR && cat README_mysql.md && docker-compose up -d postgres_global_9 pgadmin_global && cd -\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_postgres_9_stop=\"cd $ACTUAL_DIR && cat README_mysql.md && docker-compose stop postgres_global_9 pgadmin_global && cd -\"" >> .bash_fundefir_rc
-
-echo "alias ${ALIAS}_show=\"${ALIAS}_refresh\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_refresh=\"cd $ACTUAL_DIR && ./install.sh ${ALIAS} && cd -\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_reinstall=\"$ACTUAL_DIR/install.sh\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_update_tool=\"cd $ACTUAL_DIR && git pull origin master && ${ALIAS}_show && cd -\"" >> .bash_fundefir_rc
-echo "alias ${ALIAS}_console=\"$ACTUAL_DIR/bin/console\"" >> .bash_fundefir_rc
+generate_bash_file $ALIAS $ORG $ACTUAL_DIR
 
 source .bash_fundefir_rc
-# if OUTPUT=$(cat ~/.zshrc | grep .bash_fundefir_rc)
-# then
-#   echo "The commands .bash_fundefir_rc exist in ~/.zshrc!"
-# else
-#   echo "Adding to ~/.zshrc"
-#   echo "if [ -f $ACTUAL_DIR/.bash_fundefir_rc ]; then
-# 	  . $ACTUAL_DIR/.bash_fundefir_rc
-# fi" >> ~/.zshrc
-# fi
-
-# if OUTPUT=$(cat ~/.bash_profile | grep .bash_fundefir_rc)
-# then
-#   echo "The commands .bash_fundefir_rc exist in ~/.bash_profile !"
-# else
-#   echo "Adding to ~/.bash_profile"
-#   echo "if [ -f $ACTUAL_DIR/.bash_fundefir_rc ]; then
-# 	  . $ACTUAL_DIR/.bash_fundefir_rc
-#   fi" >> ~/.bash_profile
-# fi
+add_bash_fundefir $ACTUAL_DIR
 
 echo ""
 echo "Commands added 🙌: Please restart the terminal"
