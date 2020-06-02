@@ -53,6 +53,7 @@ echo -e "
 - ${GREEN}${ALIAS}_mysql_stop${NOCOLOR}       : MySQL stop
 - ${GREEN}${ALIAS}_postgres_9_up${NOCOLOR}    : Postgres v9 Up
 - ${GREEN}${ALIAS}_postgres_9_stop${NOCOLOR}  : Postgres v9 Stop
+- ${GREEN}${ALIAS}_postgres_9_exec${NOCOLOR}  : Postgres v9 Run command, ej (${GREEN}${ALIAS}_postgres_9_exec${NOCOLOR} \"CREATE DATABASE db_test\" )
 
 - ${GREEN}${ALIAS}_refresh${NOCOLOR}          : Refresh common tool is equal to ${GREEN}${ALIAS}_show${NOCOLOR} ⚡ 🙌
 - ${GREEN}${ALIAS}_reinstall${NOCOLOR}        : Reinstall command tool, ej: ${GREEN}${ALIAS}_reinstall${NOCOLOR} fd 'Fundefir ORG' ⚡ 🙌
