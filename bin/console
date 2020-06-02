@@ -40,7 +40,7 @@ case $COMMAND in
     echo ""
 
     echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}number_version${NOCOLOR}    : Install SDK, ej: ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}2.7.0${NOCOLOR}"
-    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}project${NOCOLOR} ${ORANGE}number_version${NOCOLOR}     : Show different options for projects"
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}project${NOCOLOR} ${ORANGE}<option>${NOCOLOR}           : Show different options for projects"
     ;;
 esac
 
