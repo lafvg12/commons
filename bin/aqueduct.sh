@@ -4,12 +4,12 @@ show_aqueduct_menu() {
     echo ""
     echo "List commands:"
     echo ""
-    echo -e "bin/console ${GREEN}setup${NOCOLOR}     : Create a .env files and run migrations"
-    echo -e "bin/console ${GREEN}serve${NOCOLOR}     : Up the server        (aqueduct run serve)"
-    echo -e "bin/console ${GREEN}migration${NOCOLOR} : Create new migration (aqueduct db generate)"
-    echo -e "bin/console ${GREEN}test${NOCOLOR}      : Run the test         (pub run test)"
-    echo -e "bin/console ${GREEN}coverage${NOCOLOR}  : Run the test with coverage"
-    echo -e "bin/console ${GREEN}aqueduct${NOCOLOR}  : Run the aqueduct as an expert!"
+    echo -e "${GREEN}setup${NOCOLOR}     : Create a .env files and run migrations"
+    echo -e "${GREEN}serve${NOCOLOR}     : Up the server        (aqueduct run serve)"
+    echo -e "${GREEN}migration${NOCOLOR} : Create new migration (aqueduct db generate)"
+    echo -e "${GREEN}test${NOCOLOR}      : Run the test         (pub run test)"
+    echo -e "${GREEN}coverage${NOCOLOR}  : Run the test with coverage"
+    echo -e "${GREEN}aqueduct${NOCOLOR}  : Run the aqueduct as an expert!"
     echo ""
 }
 
