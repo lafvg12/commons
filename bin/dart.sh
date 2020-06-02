@@ -1,0 +1,85 @@
+
+verify_dart_version() {
+  echo ""
+  echo -e "${ORANGE}Verify dart version:${NOCOLOR}"
+  dart --version 2>&1 | tee /tmp/dart_version.txt
+  DART_VERSION=$(cat /tmp/dart_version.txt)
+
+  if [[ "${DART_VERSION}" == *"version: 2.7"* ]]; then
+    echo "Your dart version is OK"
+  else
+    echo ""
+    echo -e "${RED}Version error${NOCOLOR}"
+    echo ""
+    echo -e "Aqueduct runs ok in ${ORANGE}Dart 2.7.*${NOCOLOR}, ${GREEN}please change your dart version:${NOCOLOR}"
+    echo ""
+    echo "Please run this commands:"
+      echo "
+        dvm install 2.7.0
+        dvm use 2.7.0
+        dart --version
+
+        Check this for install
+        https://github.com/cbracken/dvm
+      "
+
+    echo "Do you want continue anyway? Y/N"
+    read decision;
+    if [ "$decision" == 'n' ] || [ "$decision" == 'N' ] ; then
+      exit
+    fi
+  fi
+}
+
+install_dart_sdk () {
+  DART_VERSION_SDK=$1
+  DEFAULT_SO="macos-x64"
+
+  if [ -z "$DART_VERSION_SDK" ]
+  then
+    DART_VERSION_SDK="2.7.0"
+  fi
+
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    DEFAULT_SO="linux-x64"
+  fi
+
+  echo -e "${GREEN}Installing DART SDK ${DART_VERSION_SDK}${NOCOLOR}"
+  echo -e "${BLUE}Only supports MAC OS and Linux, pending Windows${NOCOLOR}"
+
+  cd /tmp
+  rm dartsdk-${DEFAULT_SO}-release.zip
+  rm -rf dartsdk-${DEFAULT_SO}-release
+  rm -rf ~/development/dart-sdk/${DART_VERSION_SDK}
+  rm -rf dart-sdk
+  rm -rf ${DART_VERSION_SDK}
+  wget https://storage.googleapis.com/dart-archive/channels/stable/release/${DART_VERSION_SDK}/sdk/dartsdk-${DEFAULT_SO}-release.zip
+  unzip dartsdk-${DEFAULT_SO}-release.zip
+  mkdir -p ~/development/dart-sdk/${DART_VERSION_SDK}
+  cp -R dart-sdk/* ~/development/dart-sdk/${DART_VERSION_SDK}/
+  cd -
+  echo -e "${GREEN}SDK downloaded${NOCOLOR}"
+  echo -e "${GREEN}Installing DART SDK finished! ${DEFAULT_SO} ${DART_VERSION_SDK}${NOCOLOR}"
+  echo -e "${ORANGE}~/development/dart-sdk/${DART_VERSION_SDK}${ORANGE}"
+  ls ~/development/dart-sdk
+}
+
+detect_dart_project() {
+  PWD="${1}"
+  aqueduct=$(cat "$PWD/pubspec.yaml" | grep aqueduct:)
+  fluter=$(cat "$PWD/pubspec.yaml" | grep flutter:)
+
+  if [[ $aqueduct == *"aqueduct"*'' ]]; then
+    echo -e "${GREEN}This is an AQUEDUCT PROJECT${NOCOLOR}"
+    echo $aqueduct
+    verify_dart_version
+    if [[ $NEW_ARGS == '' ]]; then
+        show_aqueduct_menu
+        exit
+    fi
+    create_files
+    aqueduct_execute $NEW_ARGS
+  fi
+}
+
+

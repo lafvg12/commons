@@ -1,38 +1,5 @@
 #!/bin/bash
 
-install_dart_sdk () {
-  DART_VERSION_SDK=$1
-  DEFAULT_SO="macos-x64"
-
-  if [ -z "$DART_VERSION_SDK" ]
-  then
-    DART_VERSION_SDK="2.7.0"
-  fi
-
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    DEFAULT_SO="linux-x64"
-  fi
-
-  echo -e "${GREEN}Installing DART SDK ${DART_VERSION_SDK}${NOCOLOR}"
-  echo -e "${BLUE}Only supports MAC OS and Linux, pending Windows${NOCOLOR}"
-
-  cd /tmp
-  rm dartsdk-${DEFAULT_SO}-release.zip
-  rm -rf dartsdk-${DEFAULT_SO}-release
-  rm -rf ~/development/dart-sdk/${DART_VERSION_SDK}
-  rm -rf dart-sdk
-  rm -rf ${DART_VERSION_SDK}
-  wget https://storage.googleapis.com/dart-archive/channels/stable/release/${DART_VERSION_SDK}/sdk/dartsdk-${DEFAULT_SO}-release.zip
-  unzip dartsdk-${DEFAULT_SO}-release.zip
-  mkdir -p ~/development/dart-sdk/${DART_VERSION_SDK}
-  cp -R dart-sdk/* ~/development/dart-sdk/${DART_VERSION_SDK}/
-  cd -
-  echo -e "${GREEN}SDK downloaded${NOCOLOR}"
-  echo -e "${GREEN}Installing DART SDK finished! ${DEFAULT_SO} ${DART_VERSION_SDK}${NOCOLOR}"
-  echo -e "${ORANGE}~/development/dart-sdk/${DART_VERSION_SDK}${ORANGE}"
-  ls ~/development/dart-sdk
-}
-
 detect_os () {
   echo "Your OS"
   echo -e "${GREEN}OSTYPE:${NOCOLOR} ${ORANGE}$OSTYPE${GREEN}"
@@ -53,7 +20,7 @@ detect_os () {
   else
     echo "${RED}Hmmmm, I don't know your OS...${NOCOLOR}"
   fi
-  echo
+  echo -e "${NOCOLOR}"
 }
 
 add_bash_fundefir () {
@@ -87,9 +54,9 @@ generate_bash_file() {
   ORG="$2"
   ACTUAL_DIR="$3"
 
-  echo "export ALIAS_TOOLS_F=$ALIAS" > .bash_fundefir_rc
-  echo "export ALIAS_ORG_TOOLS_F=$ORG" >> .bash_fundefir_rc
-  echo "export ALIAS_ORG_ACTUAL_DIR=$ACTUAL_DIR" >> .bash_fundefir_rc
+  echo "export ALIAS_TOOLS_F=\"$ALIAS\"" > .bash_fundefir_rc
+  echo "export ALIAS_ORG_TOOLS_F=\"$ORG\"" >> .bash_fundefir_rc
+  echo "export ALIAS_ORG_ACTUAL_DIR=\"$ACTUAL_DIR\"" >> .bash_fundefir_rc
   echo "alias ${ALIAS}_up=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose up -d && cd -\"" >> .bash_fundefir_rc
   echo "alias ${ALIAS}_status=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose ps && cd -\"" >> .bash_fundefir_rc
   echo "alias ${ALIAS}_down=\"cd $ACTUAL_DIR && cat README_global.md && docker-compose down && cd -\"" >> .bash_fundefir_rc
@@ -102,7 +69,58 @@ generate_bash_file() {
 
   echo "alias ${ALIAS}_show=\"${ALIAS}_refresh\"" >> .bash_fundefir_rc
   echo "alias ${ALIAS}_refresh=\"cd $ACTUAL_DIR && ./install.sh ${ALIAS} && cd -\"" >> .bash_fundefir_rc
-  echo "alias ${ALIAS}_reinstall=\"$ACTUAL_DIR/install.sh\"" >> .bash_fundefir_rc
+  echo "alias ${ALIAS}_open=\"cd $ACTUAL_DIR\"" >> .bash_fundefir_rc
+  echo "alias ${ALIAS}_reinstall=\"cd $ACTUAL_DIR && ./install.sh\"" >> .bash_fundefir_rc
   echo "alias ${ALIAS}_update_tool=\"cd $ACTUAL_DIR && git pull origin master && ${ALIAS}_show && cd -\"" >> .bash_fundefir_rc
   echo "alias ${ALIAS}_console=\"$ACTUAL_DIR/bin/console\"" >> .bash_fundefir_rc
 }
+
+detect_project() {
+  PWD="${1}"
+  echo $NEW_ARGS
+
+  if [[ -f "$PWD/pubspec.yaml" ]]; then
+    detect_dart_project $PWD $NEW_ARGS
+  fi
+}
+
+split_by () {
+    string=$1
+    separator=$2
+    tmp=${string//"$separator"/$'\2'}
+    IFS=$'\2' read -a arr <<< "$tmp"
+    echo $arr
+}
+
+read_file(){
+  FILE_NAME=$1
+
+  if [[ -f $1 ]]; then
+    echo "Reading $1"
+    echo ""
+  else
+    echo "Creating file $1"
+    echo ""
+    CREATE_FILE="cp $1.example $1"
+    eval $CREATE_FILE
+  fi
+
+  while IFS= read -r line
+  do
+    NAME_VAR=$(split_by $line "=")
+    VALIDATION="
+      if [[ -z \"\${$NAME_VAR}\" ]]; then
+        echo From file;
+        echo $line;
+        export $line;
+      else
+        echo From environment;
+        echo \${$NAME_VAR};
+      fi
+    "
+    echo -e "${GREEN}${NAME_VAR}${NOCOLOR}"
+    eval $VALIDATION
+
+  done < "$FILE_NAME"
+}
+

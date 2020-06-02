@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Dart: Run all Tests",
+      "type": "dart",
+      "request": "launch",
+      "program": "./test/",
+      "env": {
+        "DATABASE_CONNECTION_URL": "postgres://postgres:postgres@localhost:5432/db_name_test"
+      }
+    },
+    {
+      "name": "Dart",
+      "program": "bin/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "env": {
+        "DATABASE_CONNECTION_URL": "postgres://bk_service_user:postgres@localhost:5432/db_name"
+      }
+    },
+    {
+      "name": "Run test with env-vars",
+      "request": "launch",
+      "type": "dart",
+      "template": "run-test",
+      "env": {
+        "DATABASE_CONNECTION_URL": "postgres://postgres:postgres@localhost:5432/db_name_test"
+      }
+    },
+    {
+      "name": "Debug with env-vars",
+      "request": "launch",
+      "type": "dart",
+      "template": "debug-test",
+      "env": {
+        "DATABASE_CONNECTION_URL": "postgres://postgres:postgres@localhost:5432/db_name_test"
+      }
+    }
+  ]
+}

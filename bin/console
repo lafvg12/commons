@@ -2,6 +2,8 @@
 
 source ${ALIAS_ORG_ACTUAL_DIR}/bin/colors.sh
 source ${ALIAS_ORG_ACTUAL_DIR}/bin/functions.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/dart.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/aqueduct.sh
 
 COMMAND=$1
 ARG=$2
@@ -25,13 +27,20 @@ case $COMMAND in
     echo "Initialization: installing SDK $NEW_ARGS"
     install_dart_sdk $NEW_ARGS
     ;;
+  "project")
+    echo -e "${GREEN}Executing Project option${NOCOLOR}"
+    echo ""
+    detect_project "${PWD}" $NEW_ARGS
+    ;;
   *)
     echo -e "${RED}Command not found${NOCOLOR}"
+    echo ""
 
     echo "The available commands:"
     echo ""
 
-    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}number_version${NOCOLOR}     : Install SDK, ej: ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}2.7.0${NOCOLOR}"
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}number_version${NOCOLOR}    : Install SDK, ej: ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}2.7.0${NOCOLOR}"
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}project${NOCOLOR} ${ORANGE}number_version${NOCOLOR}     : Show different options for projects"
     ;;
 esac
 
