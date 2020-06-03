@@ -1,16 +1,10 @@
 # Common tools for Fundefir
 
-1. Allow to execute file `install.sh`
+### Getting started
 
-```
-sudo chmod +x ./install.sh
-```
+Execute the installing ❤️ `./install.sh`, it's all, please refresh your terminal.
 
-2. Execute the installing ❤️
-
-```
-./install.sh
-```
+![Commands](./doc/command.png)
 
 For view all the services available:
 

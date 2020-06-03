@@ -24,28 +24,24 @@ detect_os () {
 }
 
 add_bash_fundefir () {
-  ACTUAL_DIR=$1
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      echo -e "${ORANGE}Installing on Linux...${NOCOLOR}"
-      if OUTPUT=$(cat ~/.zshrc | grep .bash_fundefir_rc)
-      then
-        echo "The commands .bash_fundefir_rc exist in ~/.zshrc!"
-      else
-        echo "Adding to ~/.zshrc"
-        echo "if [ -f $ACTUAL_DIR/.bash_fundefir_rc ]; then
-          . $ACTUAL_DIR/.bash_fundefir_rc
-      fi" >> ~/.zshrc
-      fi
+  if OUTPUT=$(cat ~/.zshrc | grep .bash_fundefir_rc)
+  then
+    echo "The commands .bash_fundefir_rc exist in ~/.zshrc!"
+  else
+    echo "Adding to ~/.zshrc"
+    echo "if [ -f $ACTUAL_DIR/.bash_fundefir_rc ]; then
+      . $ACTUAL_DIR/.bash_fundefir_rc
+  fi" >> ~/.zshrc
+  fi
 
-      if OUTPUT=$(cat ~/.bash_profile | grep .bash_fundefir_rc)
-      then
-        echo "The commands .bash_fundefir_rc exist in ~/.bash_profile !"
-      else
-        echo "Adding to ~/.bash_profile"
-        echo "if [ -f $ACTUAL_DIR/.bash_fundefir_rc ]; then
-          . $ACTUAL_DIR/.bash_fundefir_rc
-        fi" >> ~/.bash_profile
-      fi
+  if OUTPUT=$(cat ~/.bash_profile | grep .bash_fundefir_rc)
+  then
+    echo "The commands .bash_fundefir_rc exist in ~/.bash_profile !"
+  else
+    echo "Adding to ~/.bash_profile"
+    echo "if [ -f $ACTUAL_DIR/.bash_fundefir_rc ]; then
+      . $ACTUAL_DIR/.bash_fundefir_rc
+    fi" >> ~/.bash_profile
   fi
 }
 

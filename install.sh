@@ -39,7 +39,7 @@ detect_os
 
 generate_bash_file "$ALIAS" "$ORG" "$ACTUAL_DIR"
 
-source .bash_fundefir_rc
+source ./.bash_fundefir_rc
 add_bash_fundefir $ACTUAL_DIR
 
 echo ""
