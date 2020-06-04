@@ -26,7 +26,7 @@ aqueduct_execute() {
         echo
         echo ""
         pub run aqueduct db upgrade --connect $DATABASE_CONNECTION_URL
-        pub run test $NEW_ARGS
+        pub run $NEW_ARGS
         exit
     fi
 
