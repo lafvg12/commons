@@ -57,7 +57,8 @@ aqueduct_execute() {
         read_file ".env.test" > /dev/null
         read_file ".env" > /dev/null
         pub run test_coverage
-        genhtml -o coverage coverage/lcov.info
+        lcov --remove coverage/lcov.info "lib/_configuration/*" -o coverage/lcov_cleaned.info
+        genhtml -o coverage coverage/lcov_cleaned.info
 
         if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             google-chrome ./coverage/index.html
