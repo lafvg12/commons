@@ -64,6 +64,29 @@ install_dart_sdk () {
   ls ~/development/dart-sdk
 }
 
+show_dart_sdk () {
+  echo ""
+  ls ~/development/dart-sdk
+}
+
+set_dart_sdk () {
+  DART_SELECTED=$1
+
+  if [[ $DART_SELECTED == '' ]]; then
+    echo "Please select a dart sdk version:"
+    ls ~/development/dart-sdk
+    exit 1
+  fi
+
+  echo -e "${GREEN}Setting dart SDK${NOCOLOR}"
+
+  rm ~/development/dart-actual
+  ln -s ~/development/dart-sdk/$DART_SELECTED ~/development/dart-actual
+  export PATH="$PATH:~/development/dart-actual/bin"
+  add_dart_to_bash
+  dart --version
+}
+
 detect_dart_project() {
   PWD="${1}"
   aqueduct=$(cat "$PWD/pubspec.yaml" | grep aqueduct:)

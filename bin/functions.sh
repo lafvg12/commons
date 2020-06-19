@@ -45,6 +45,29 @@ add_bash_fundefir () {
   fi
 }
 
+add_dart_to_bash () {
+  if OUTPUT=$(cat ~/.zshrc | grep 'export PATH="$HOME/development/dart-actual/bin:$PATH"')
+  then
+    echo "Your path for Dart SDK is ok in ~/.zshrc"
+  else
+    echo "Adding to ~/.zshrc"
+    echo 'export PATH="$HOME/development/dart-actual/bin:$PATH"' >> ~/.zshrc
+    echo 'export PATH="$PATH":"$HOME/.pub-cache/bin"' >> ~/.zshrc
+  fi
+
+  if OUTPUT=$(cat ~/.bash_profile | grep 'export PATH="$HOME/development/dart-actual/bin:$PATH"')
+  then
+    echo "Your path for Dart SDK is ok in ~/.bash_profile"
+  else
+    echo "Adding to ~/.bash_profile "
+    echo 'export PATH="$HOME/development/dart-actual/bin:$PATH"' >> ~/.bash_profile
+    echo 'export PATH="$PATH":"$HOME/.pub-cache/bin"' >> ~/.bash_profile
+  fi
+  echo ""
+  echo -e "${ORANGE}=== Please refresh your terminal ===${NOCOLOR}"
+  echo ""
+}
+
 generate_bash_file() {
   ALIAS="$1"
   ORG="$2"
@@ -120,4 +143,3 @@ read_file(){
 
   done < "$FILE_NAME"
 }
-
