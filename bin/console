@@ -42,7 +42,7 @@ case $COMMAND in
     echo ""
     echo "======================================================================"
     echo -e "${ORANGE}Please execute manually for charge temporaly your env files${NOCOLOR} 🎉"
-    echo -e "${GREEN}source $NEW_ARGS${NOCOLOR}"
+    echo -e "${GREEN}export \$(cat $NEW_ARGS | xargs)${NOCOLOR}"
     echo "======================================================================"
     ;;
   "project")
