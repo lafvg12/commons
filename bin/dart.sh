@@ -21,6 +21,9 @@ verify_dart_version() {
 
         Check this for install
         https://github.com/cbracken/dvm
+
+        Or use
+        ${ALIAS_TOOLS_F}_console set_dart_sdk 2.7.0
       "
 
     echo "Do you want continue anyway? Y/N"
@@ -102,6 +105,16 @@ detect_dart_project() {
     fi
     create_files
     aqueduct_execute $NEW_ARGS
+  fi
+
+  if [[ $fluter == *"flutter"*'' ]]; then
+    echo -e "${GREEN}This is an FLUTTER PROJECT${NOCOLOR}"
+    echo $flutter
+    if [[ $NEW_ARGS == '' ]]; then
+        show_flutter_menu
+        exit
+    fi
+    flutter_execute $NEW_ARGS
   fi
 }
 
