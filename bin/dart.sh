@@ -94,6 +94,8 @@ detect_dart_project() {
   PWD="${1}"
   aqueduct=$(cat "$PWD/pubspec.yaml" | grep aqueduct:)
   fluter=$(cat "$PWD/pubspec.yaml" | grep flutter:)
+  dart=$(cat "$PWD/pubspec.yaml")
+  length=${#dart}
 
   if [[ $aqueduct == *"aqueduct"*'' ]]; then
     echo -e "${GREEN}This is an AQUEDUCT PROJECT${NOCOLOR}"
@@ -115,6 +117,23 @@ detect_dart_project() {
         exit
     fi
     flutter_execute $NEW_ARGS
+  fi
+
+  if [[ lenght > 0 && $fluter == '' && $aqueduct == '' ]]; then
+    echo -e "${GREEN}Dart plain project${NOCOLOR}"
+    name=$(cat "$PWD/pubspec.yaml" | grep name:)
+    description=$(cat "$PWD/pubspec.yaml" | grep description:)
+    version=$(cat "$PWD/pubspec.yaml" | grep version:)
+
+    echo "$name"
+    echo "$description"
+    echo "$version"
+
+    if [[ $NEW_ARGS == '' ]]; then
+        show_dart_plain_menu
+        exit
+    fi
+    dart_plain_execute $NEW_ARGS
   fi
 }
 
