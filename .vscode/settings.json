@@ -1,0 +1,12 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "breadcrumbs.enabled": true,
+  "git.ignoreLimitWarning": true,
+  "dart.sdkPaths": [
+    "~/development/dart-sdk"
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#3f969c"
+  }
+}
