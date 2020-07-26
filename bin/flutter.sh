@@ -16,6 +16,18 @@ flutter_execute() {
     if [[ "coverage" == $COMMAND ]]
     then
         flutter test --coverage
+        if [ $? -eq 0 ]; then
+            echo ""
+            echo -e "${GREEN}Test ok${NOCOLOR}"
+            echo ""
+        else
+            echo ""
+            echo -e "${RED}*****************************************************"
+            echo -e "The test fails, please review for see the coverage"
+            echo -e "*****************************************************${NOCOLOR}"
+            exit
+        fi
+
         flutter pub run remove_from_coverage -f coverage/lcov.info -r 'lib/generated' -r 'lib/src/screens/homeTest'
         echo "Excluding 'lib/generated' and 'lib/src/screens/homeTest'"
         genhtml -o coverage coverage/lcov.info

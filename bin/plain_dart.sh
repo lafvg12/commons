@@ -15,6 +15,17 @@ dart_plain_execute() {
     if [[ "coverage" == $COMMAND ]]
     then
         pub run test_coverage
+        if [ $? -eq 0 ]; then
+            echo ""
+            echo -e "${GREEN}Test ok${NOCOLOR}"
+            echo ""
+        else
+            echo ""
+            echo -e "${RED}*****************************************************"
+            echo -e "The test fails, please review for see the coverage"
+            echo -e "*****************************************************${NOCOLOR}"
+            exit
+        fi
         lcov --remove coverage/lcov.info "lib/_configuration/*" -o coverage/lcov_cleaned.info
         genhtml -o coverage coverage/lcov_cleaned.info
 
