@@ -27,9 +27,12 @@ flutter_execute() {
             echo -e "*****************************************************${NOCOLOR}"
             exit
         fi
-
-        flutter pub run remove_from_coverage -f coverage/lcov.info -r 'lib/generated' -r 'lib/src/screens/homeTest'
-        echo "Excluding 'lib/generated' and 'lib/src/screens/homeTest'"
+        if [[ ! -f '.coverage_exclude' ]]
+        then
+            remove="flutter pub run remove_from_coverage -f coverage/lcov.info";for line in $(cat .coverage_exclude); do remove="$remove -r '$line' " ; done;echo $remove; eval $remove;
+        fi
+        # flutter pub run remove_from_coverage -f coverage/lcov.info -r 'lib/generated' -r 'lib/src/screens/homeTest'
+        # echo "Excluding 'lib/generated' and 'lib/src/screens/homeTest'"
         genhtml -o coverage coverage/lcov.info
 
         if [[ "$OSTYPE" == "linux-gnu"* ]]; then
