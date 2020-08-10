@@ -26,6 +26,11 @@ dart_plain_execute() {
             echo -e "*****************************************************${NOCOLOR}"
             exit
         fi
+
+        # if [[ ! -f '.coverage_exclude' ]]
+        # then
+        #     remove="lcov --remove coverage/lcov.info";for line in $(cat .coverage_exclude); do remove="$remove -r '$line' " ; done;echo $remove; eval $remove;
+        # fi
         lcov --remove coverage/lcov.info "lib/_configuration/*" -o coverage/lcov_cleaned.info
         genhtml -o coverage coverage/lcov_cleaned.info
 
