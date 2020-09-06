@@ -1,6 +1,19 @@
 version: "3.4"
 
 services:
+  rabbit:
+    image: "rabbitmq:management-alpine"
+    container_name: "rabbit_global"
+    ports:
+      - "32778:4369"
+      - "32777:5671"
+      - "5672:5672"
+      - "32775:15671"
+      - "15672:15672"
+      - "32774:25672"
+    networks:
+      - base-commons
+    restart: always
   mysql_global:
     image: mysql:8
     container_name: mysql_global
