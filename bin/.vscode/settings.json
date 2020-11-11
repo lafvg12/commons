@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "breadcrumbs.enabled": true,
+  "git.ignoreLimitWarning": true,
+  "dart.sdkPaths": [
+    "~/development/dart-sdk"
+  ],
+  "dart.sdkPath": "~/development/dart-sdk/2.7.0"
+}

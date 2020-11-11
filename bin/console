@@ -1,0 +1,76 @@
+#!/bin/bash
+
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/colors.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/functions.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/dart.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/aqueduct.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/flutter.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/plain_dart.sh
+source ${ALIAS_ORG_ACTUAL_DIR}/bin/bump-version.sh
+
+COMMAND=$1
+ARG=$2
+num_args="$#"
+
+for (( i = 2; i <= "$num_args"; i++ )); do
+    NEW_ARGS="$NEW_ARGS $2"
+    shift
+done
+
+echo -e "${GREEN}
+==============================================================
+TOOLS Console command for ${ORANGE}$ALIAS_ORG_TOOLS_F${NOCOLOR}
+${GREEN}==============================================================${NOCOLOR}
+"
+
+detect_os
+
+case $COMMAND in
+  "bump_version")
+    echo "Generate bump version: $NEW_ARGS"
+    generate_bump_version $NEW_ARGS
+    ;;
+  "dart_sdk")
+    echo "Initialization: installing SDK $NEW_ARGS"
+    install_dart_sdk $NEW_ARGS
+    ;;
+  "dart_list")
+    echo "Showing SDK dart list"
+    show_dart_sdk
+    ;;
+  "set_dart_sdk")
+    echo "Setting SDK dart $NEW_ARGS"
+    set_dart_sdk $NEW_ARGS
+    ;;
+  "set_env")
+    echo "Set environment file to actual $NEW_ARGS"
+    read_file $NEW_ARGS
+    source $NEW_ARGS
+    echo ""
+    echo "======================================================================"
+    echo -e "${ORANGE}Please execute manually for charge temporaly your env files${NOCOLOR} 🎉"
+    echo -e "${GREEN}export \$(cat $NEW_ARGS | xargs)${NOCOLOR}"
+    echo "======================================================================"
+    ;;
+  "project")
+    echo -e "${GREEN}Executing Project option${NOCOLOR}"
+    echo ""
+    detect_project "${PWD}" $NEW_ARGS
+    ;;
+  *)
+    echo -e "${RED}Command not found${NOCOLOR}"
+    echo ""
+
+    echo "The available commands:"
+    echo ""
+
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}bump_version${NOCOLOR}                                  : Generate a Bumb version"
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}number_version${NOCOLOR}    : Install SDK, ej: ${ALIAS_TOOLS_F}_console ${GREEN}dart_sdk${NOCOLOR} ${ORANGE}2.7.0${NOCOLOR}"
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}set_env${NOCOLOR} ${ORANGE}env_file${NOCOLOR}           : Set environment file, ej: ${ALIAS_TOOLS_F}_console ${GREEN}env_file${NOCOLOR} ${ORANGE}.env${NOCOLOR}"
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}dart_list${NOCOLOR}                  : Show actual SDK dart"
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}set_dart_sdk${NOCOLOR} ${ORANGE}<option>${NOCOLOR}      : Set SDK dart, ej: ${ALIAS_TOOLS_F}_console ${GREEN}set_dart_sdk${NOCOLOR} ${ORANGE}2.7.0${NOCOLOR}"
+    echo -e "- ${ALIAS_TOOLS_F}_console ${GREEN}project${NOCOLOR} ${ORANGE}<option>${NOCOLOR}           : Show different options for projects"
+    ;;
+esac
+
+

@@ -1,21 +1,11 @@
-## Services in Base commons
+# Common tools for Fundefir
 
-### Mysql:8
-user: root
-pass: root
-port: 3306
+### Getting started
 
-### PHPmyadmin
-user: root
-pass: root
-url: http://localhost:8080
+Execute the installing ❤️ `./install.sh`, it's all, please refresh your terminal.
 
-### Postgres:9.6
-user: postgres
-pass: postgres
-port: 5432
+![Commands](./doc/command.png)
 
-### PGAdmin
-user: pgadmin4@pgadmin.org
-pass: admin
-url: http://localhost:5555
+For view all the services available:
+
+[README_global.md](./README_global.md)
